@@ -1,0 +1,44 @@
+[
+  {
+    "id": "portrait1",
+    "category": "portraits",
+    "src": "images/portraits/portrait1.svg",
+    "descSrc": "data/portraits/portrait1.txt",
+    "title": "Portrait Étude 1"
+  },
+  {
+    "id": "portrait2",
+    "category": "portraits",
+    "src": "images/portraits/portrait2.svg",
+    "descSrc": "data/portraits/portrait2.txt",
+    "title": "Portrait Étude 2"
+  },
+  {
+    "id": "paysage1",
+    "category": "paysages",
+    "src": "images/paysages/paysage1.svg",
+    "descSrc": "data/paysages/paysage1.txt",
+    "title": "Vallée Silencieuse"
+  },
+  {
+    "id": "paysage2",
+    "category": "paysages",
+    "src": "images/paysages/paysage2.svg",
+    "descSrc": "data/paysages/paysage2.txt",
+    "title": "Lac Miroir"
+  },
+  {
+    "id": "event1",
+    "category": "evenements",
+    "src": "images/evenements/event1.svg",
+    "descSrc": "data/evenements/event1.txt",
+    "title": "Mariage A&B"
+  },
+  {
+    "id": "event2",
+    "category": "evenements",
+    "src": "images/evenements/event2.svg",
+    "descSrc": "data/evenements/event2.txt",
+    "title": "Jazz Festival"
+  }
+]
