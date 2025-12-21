@@ -30,5 +30,45 @@ const GALLERY_DATA = [
     "title": "Sortie D•Église",
     "year": "2000",
     "description": "dans le bonheur et le bonne humeur"
+  },
+  {
+    "id": "nature-paysages_lac des alpes",
+    "category": "nature-paysages",
+    "src": "images/nature-paysages/lac%20des%20alpes.jpeg",
+    "title": "Lac Des Alpes",
+    "year": "2025",
+    "description": "le beau reflet de la montagne"
+  },
+  {
+    "id": "nature-paysages_pommier du japon",
+    "category": "nature-paysages",
+    "src": "images/nature-paysages/pommier%20du%20japon.jpg",
+    "title": "Pommier Du Japon",
+    "year": "2025",
+    "description": "le petit pomier tout rose"
+  },
+  {
+    "id": "creatif_les fils du renard",
+    "category": "creatif",
+    "src": "images/creatif/les%20fils%20du%20renard.jpg",
+    "title": "Les Fils Du Renard",
+    "year": "2000",
+    "description": "cascade de couleur"
+  },
+  {
+    "id": "creatif_quand la peinture s'éloigne",
+    "category": "creatif",
+    "src": "images/creatif/quand%20la%20peinture%20s%27%C3%A9loigne.jpg",
+    "title": "Quand La Peinture S•Éloigne",
+    "year": "2015",
+    "description": "de la peinture au tableau"
+  },
+  {
+    "id": "creatif_tout au bord de l'eau",
+    "category": "creatif",
+    "src": "images/creatif/tout%20au%20bord%20de%20l%27eau.jpg",
+    "title": "Tout Au Bord De L•Eau",
+    "year": "2020",
+    "description": "dans la limite du réel"
   }
 ];

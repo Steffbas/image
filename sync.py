@@ -23,7 +23,7 @@ def parse_txt_file(file_path):
                 line_str = line.strip()
                 if line_str.lower().startswith('date :'):
                     data["date"] = line_str.split(':', 1)[1].strip()
-                elif line_str.lower().startswith('description :'):
+                elif line_str.lower().startswith('description :') or line_str.lower().startswith('descritpion :'):
                     data["description"] = line_str.split(':', 1)[1].strip()
     return data
 
