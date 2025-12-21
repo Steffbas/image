@@ -1,113 +1,108 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const body = document.body;
     const gallery = document.getElementById('gallery');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxTitle = document.getElementById('lightbox-title');
-    const lightboxDesc = document.getElementById('lightbox-desc');
-    const closeBtn = document.querySelector('.close-btn');
+    const menuBtn = document.getElementById('menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const detailView = document.getElementById('detail-view');
 
+    // 1. INTRO
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            body.classList.remove('loading');
+        }, 5500);
+    });
+
+    // 2. GESTION DU MENU OVERLAY
+    menuBtn.onclick = () => {
+        menuOverlay.classList.add('active');
+        body.style.overflow = 'hidden';
+    };
+
+    closeMenuBtn.onclick = () => {
+        menuOverlay.classList.remove('active');
+        body.style.overflow = '';
+    };
+
+    // Fermer le menu si on clique sur un lien
+    document.querySelectorAll('.menu-link').forEach(link => {
+        link.onclick = () => {
+            menuOverlay.classList.remove('active');
+            body.style.overflow = '';
+        };
+    });
+
+    // 3. DONNÉES ET GALERIE
     let allPhotos = [];
+    
+    // On utilise les données injectées via js/data.js
+    if (typeof GALLERY_DATA !== 'undefined') {
+        allPhotos = GALLERY_DATA;
+        renderGallery(allPhotos);
+        setupFilters();
+    } else {
+        console.error("Les données de la galerie (GALLERY_DATA) sont introuvables.");
+    }
 
-    // 1. Charger les données depuis data.json
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            allPhotos = data;
-            renderGallery(allPhotos); // Afficher toutes les photos au démarrage
-        })
-        .catch(error => console.error('Erreur lors du chargement des données:', error));
-
-    // 2. Fonction pour afficher la galerie
     function renderGallery(photos) {
-        gallery.innerHTML = ''; // Vider la galerie
-        photos.forEach(photo => {
+        gallery.innerHTML = '';
+        photos.forEach((photo, index) => {
             const item = document.createElement('div');
-            item.classList.add('gallery-item');
-            item.dataset.category = photo.category;
-            
+            item.className = 'grid-item';
             item.innerHTML = `
-                <img src="${photo.src}" alt="${photo.title}">
-                <div class="overlay">
-                    <h3>${photo.title}</h3>
+                <div class="img-container">
+                    <img src="${photo.src}" alt="${photo.title}">
+                </div>
+                <div class="item-info" style="display:flex; justify-content:space-between; margin-top:10px; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; opacity:0.6;">
+                    <span>${photo.title}</span>
+                    <span>${photo.year}</span>
                 </div>
             `;
-            
-            // Ouvrir la lightbox au clic
-            item.addEventListener('click', () => openLightbox(photo));
+            item.onclick = () => openDetail(photo);
             gallery.appendChild(item);
-        });
-    }
-
-    // 3. Gestion des filtres
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Mise à jour de la classe active
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filter = btn.dataset.filter;
             
-            if (filter === 'all') {
-                renderGallery(allPhotos);
-            } else {
-                const filteredPhotos = allPhotos.filter(photo => photo.category === filter);
-                renderGallery(filteredPhotos);
-            }
+            setTimeout(() => item.classList.add('visible'), 100 + (index * 100));
         });
-    });
-
-    // 4. Gestion de la Lightbox
-    function openLightbox(photo) {
-        lightbox.classList.remove('hidden');
-        // Petit délai pour permettre la transition CSS (fade-in)
-        requestAnimationFrame(() => {
-            lightbox.classList.add('visible');
-        });
-        
-        lightboxImg.src = photo.src;
-        lightboxImg.alt = photo.title;
-        lightboxTitle.textContent = photo.title;
-        
-        // Charger la description depuis le fichier texte
-        lightboxDesc.textContent = "Chargement...";
-        fetch(photo.descSrc)
-            .then(res => {
-                if (!res.ok) throw new Error('Pas de description');
-                return res.text();
-            })
-            .then(text => {
-                lightboxDesc.textContent = text;
-            })
-            .catch(() => {
-                lightboxDesc.textContent = "Aucune description disponible pour cette photo.";
-            });
     }
 
-    function closeLightbox() {
-        lightbox.classList.remove('visible');
-        // Attendre la fin de la transition avant de masquer
-        setTimeout(() => {
-            lightbox.classList.add('hidden');
-            lightboxImg.src = '';
-            lightboxDesc.textContent = '';
-        }, 300);
+    // 4. LOGIQUE DES FILTRES
+    function setupFilters() {
+        document.querySelectorAll('#gallery-filters li').forEach(link => {
+            link.onclick = () => {
+                document.querySelectorAll('#gallery-filters li').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                const filter = link.dataset.filter;
+                const filtered = filter === 'all' ? allPhotos : allPhotos.filter(p => p.category === filter);
+                
+                // Effet de sortie avant refresh
+                document.querySelectorAll('.grid-item').forEach(i => i.classList.remove('visible'));
+                setTimeout(() => renderGallery(filtered), 400);
+            };
+        });
     }
 
-    // Fermer au clic sur le bouton croix
-    closeBtn.addEventListener('click', closeLightbox);
-
-    // Fermer au clic en dehors du contenu (sur le fond sombre)
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
-            closeLightbox();
+    // 5. VUE DÉTAIL
+    function openDetail(photo) {
+        document.getElementById('detail-img').src = photo.src;
+        document.getElementById('detail-title').textContent = photo.title;
+        document.getElementById('detail-category').textContent = photo.category.replace('-', ' • ');
+        document.getElementById('detail-year').textContent = photo.year;
+        
+        // On utilise la description extraite par le script sync.py
+        const descElement = document.getElementById('detail-desc');
+        if (photo.description) {
+            descElement.innerHTML = photo.description.replace(/\n/g, '<br>');
+        } else {
+            descElement.textContent = "Aucune description disponible.";
         }
-    });
+        
+        detailView.classList.add('open');
+        body.style.overflow = 'hidden';
+    }
 
-    // Fermer avec la touche Echap
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('visible')) {
-            closeLightbox();
-        }
-    });
+    document.getElementById('close-detail').onclick = () => {
+        detailView.classList.remove('open');
+        body.style.overflow = '';
+    };
 });
