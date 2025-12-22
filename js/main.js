@@ -21,12 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 3. CHARGEMENT GALERIE
+    console.log("Tentative de chargement de la galerie...");
     if (typeof GALLERY_ITEMS !== 'undefined') {
+        console.log("GALLERY_ITEMS trouvé, nombre d'images :", GALLERY_ITEMS.length);
         renderGallery(GALLERY_ITEMS);
         setupFilters(GALLERY_ITEMS);
+    } else {
+        console.error("GALLERY_ITEMS est indéfini ! Vérifiez que js/gallery_config.js est bien chargé.");
     }
 
     function renderGallery(photos) {
+        console.log("Rendu de la galerie avec", photos.length, "photos.");
         gallery.innerHTML = '';
         photos.forEach((photo, index) => {
             const item = document.createElement('div');
