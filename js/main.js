@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             item.className = 'grid-item';
             item.innerHTML = `
                 <div class="img-container">
-                    <img src="${photo.src}" alt="${photo.title}" loading="lazy">
+                    <img src="${photo.src}" alt="${photo.title}" loading="lazy" onerror="console.error('Erreur de chargement pour l\'image :', this.src)">
                 </div>
                 <div class="item-info" style="display:flex; justify-content:space-between; margin-top:10px; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; opacity:0.6;">
                     <span>${photo.title}</span>
