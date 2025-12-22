@@ -1,4 +1,4 @@
-const GALLERY_VERSION = 1766440483;
+const GALLERY_VERSION = 1766440827;
 const GALLERY_ITEMS = [
   {
     "id": "ben_et_josianne.webp",
@@ -22,7 +22,7 @@ const GALLERY_ITEMS = [
     "id": "sortie_d_eglise.jpg",
     "category": "mariages",
     "src": "images/mariages/sortie%20d%27%C3%A9glise.jpg",
-    "title": "Sortie D•Église"
+    "title": "Sortie D Église"
   },
   {
     "id": "lac_des_alpes.jpeg",
@@ -52,12 +52,12 @@ const GALLERY_ITEMS = [
     "id": "quand_la_peinture_s_eloigne.jpg",
     "category": "creatif",
     "src": "images/creatif/quand%20la%20peinture%20s%27%C3%A9loigne.jpg",
-    "title": "Quand La Peinture S•Éloigne"
+    "title": "Quand La Peinture S Éloigne"
   },
   {
     "id": "tout_au_bord_de_l_eau.jpg",
     "category": "creatif",
     "src": "images/creatif/tout%20au%20bord%20de%20l%27eau.jpg",
-    "title": "Tout Au Bord De L•Eau"
+    "title": "Tout Au Bord De L Eau"
   }
 ];
