@@ -62,9 +62,6 @@ def sync():
                 
                 final_rows.append(row)
                 
-                # On remplace les apostrophes par des espaces dans le titre pour l'affichage
-                display_title = row['Titre'].replace("'", " ")
-                
                 # 2. Encodage du chemin image
                 safe_filename = urllib.parse.quote(filename)
                 img_path = f"images/{cat}/{safe_filename}"
@@ -75,7 +72,7 @@ def sync():
                 detail_filename = f"{detail_id}.json"
                 
                 detail_data = {
-                    "title": display_title,
+                    "title": row['Titre'],
                     "year": row['Annee'],
                     "category": row['Categorie'],
                     "description": row['Description']
@@ -89,7 +86,7 @@ def sync():
                     "id": detail_id, # L'ID qui permettra de charger la fiche
                     "category": cat,
                     "src": img_path,
-                    "title": display_title # Titre affiché sous l'image en grille
+                    "title": row['Titre'] # Titre affiché sous l'image en grille
                 })
 
     save_csv(final_rows)

@@ -1,4 +1,4 @@
-const GALLERY_VERSION = 1766440315;
+const GALLERY_VERSION = 1766440483;
 const GALLERY_ITEMS = [
   {
     "id": "ben_et_josianne.webp",
