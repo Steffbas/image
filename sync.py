@@ -3,7 +3,6 @@ import json
 import csv
 import datetime
 import urllib.parse
-import time
 
 # Configuration
 CATEGORIES = ['mariages', 'nature-paysages', 'portrait-reportages', 'urbain', 'creatif']
@@ -31,18 +30,16 @@ def save_csv(rows):
 def sync():
     existing_data = load_csv()
     final_rows = []
-    gallery_config = []
-    descriptions_db = {}
+    gallery_data = []
 
     for cat in CATEGORIES:
         img_dir = os.path.join('images', cat)
         if not os.path.exists(img_dir): continue
             
-        for filename in sorted(os.listdir(img_dir)): # Tri pour garder un ordre cohérent
+        for filename in sorted(os.listdir(img_dir)):
             if filename.lower().endswith(IMG_EXTENSIONS):
                 if filename in existing_data:
                     row = existing_data[filename]
-                    # On s'assure que la catégorie est à jour même si on a déplacé le fichier
                     row['Categorie'] = cat
                 else:
                     full_path = os.path.join(img_dir, filename)
@@ -58,33 +55,26 @@ def sync():
                 
                 final_rows.append(row)
                 
-                img_path = f"images/{cat}/{urllib.parse.quote(filename)}"
-                # L'ID doit être basé sur le nom du fichier pour être stable
-                item_id = hashlib_id = str(hash(filename)) 
+                # Encodage pour URL
+                safe_filename = urllib.parse.quote(filename)
+                img_path = f"images/{cat}/{safe_filename}"
                 
-                gallery_config.append({
-                    "id": filename, # Utilisation directe du nom de fichier comme ID
+                gallery_data.append({
+                    "id": filename,
                     "category": cat,
                     "src": img_path,
                     "title": row['Titre'],
-                    "year": row['Annee']
+                    "year": row['Annee'],
+                    "description": row['Description'] # La description est incluse ici !
                 })
-                descriptions_db[filename] = row['Description']
 
     save_csv(final_rows)
 
-    # Génération d'un Timestamp pour casser le cache
-    version = int(time.time())
+    # On écrit TOUT dans js/data.js
+    with open('js/data.js', 'w', encoding='utf-8') as f:
+        f.write(f"const GALLERY_DATA = {json.dumps(gallery_data, indent=2, ensure_ascii=False)};")
 
-    with open('js/gallery_config.js', 'w', encoding='utf-8') as f:
-        f.write(f"const GALLERY_VERSION = {version};\n")
-        f.write(f"const GALLERY_ITEMS = {json.dumps(gallery_config, indent=2, ensure_ascii=False)};")
-    
-    with open('data/descriptions.json', 'w', encoding='utf-8') as f:
-        json.dump(descriptions_db, f, indent=2, ensure_ascii=False)
-
-    print(f"✅ Synchro terminée : {len(gallery_config)} photos.")
-    print(f"🔄 Version : {version} (Cache browser forcé à se vider)")
+    print(f"✅ Synchro terminée : {len(gallery_data)} photos intégrées avec leurs descriptions.")
 
 if __name__ == "__main__":
     sync()
