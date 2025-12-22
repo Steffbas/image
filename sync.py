@@ -9,6 +9,7 @@ import time
 CATEGORIES = ['mariages', 'nature-paysages', 'portrait-reportages', 'urbain', 'creatif']
 IMG_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.svg', '.webp')
 CSV_FILE = 'data/portfolio.csv'
+DETAILS_DIR = 'data/details'
 
 def load_csv():
     data = {}
@@ -32,7 +33,10 @@ def sync():
     existing_data = load_csv()
     final_rows = []
     gallery_config = []
-    descriptions_db = {}
+    
+    # Création du dossier des fiches individuelles
+    if not os.path.exists(DETAILS_DIR):
+        os.makedirs(DETAILS_DIR)
 
     for cat in CATEGORIES:
         img_dir = os.path.join('images', cat)
@@ -40,6 +44,7 @@ def sync():
             
         for filename in sorted(os.listdir(img_dir)):
             if filename.lower().endswith(IMG_EXTENSIONS):
+                # 1. Récupération ou création des infos
                 if filename in existing_data:
                     row = existing_data[filename]
                     row['Categorie'] = cat
@@ -57,30 +62,41 @@ def sync():
                 
                 final_rows.append(row)
                 
+                # 2. Encodage du chemin image
                 safe_filename = urllib.parse.quote(filename)
                 img_path = f"images/{cat}/{safe_filename}"
                 
+                # 3. Création de la FICHE INDIVIDUELLE (JSON)
+                # On utilise un nom de fichier sécurisé pour la fiche
+                detail_id = filename.replace(' ', '_').replace("'", "_").replace('é', 'e')
+                detail_filename = f"{detail_id}.json"
+                
+                detail_data = {
+                    "title": row['Titre'],
+                    "year": row['Annee'],
+                    "category": row['Categorie'],
+                    "description": row['Description']
+                }
+                
+                with open(os.path.join(DETAILS_DIR, detail_filename), 'w', encoding='utf-8') as f:
+                    json.dump(detail_data, f, indent=2, ensure_ascii=False)
+
+                # 4. Config ultra-légère pour la grille
                 gallery_config.append({
-                    "id": filename,
+                    "id": detail_id, # L'ID qui permettra de charger la fiche
                     "category": cat,
                     "src": img_path,
-                    "title": row['Titre'],
-                    "year": row['Annee']
+                    "title": row['Titre'] # Titre affiché sous l'image en grille
                 })
-                descriptions_db[filename] = row['Description']
 
     save_csv(final_rows)
 
     version = int(time.time())
-
     with open('js/gallery_config.js', 'w', encoding='utf-8') as f:
         f.write(f"const GALLERY_VERSION = {version};\n")
         f.write(f"const GALLERY_ITEMS = {json.dumps(gallery_config, indent=2, ensure_ascii=False)};")
-    
-    with open('data/descriptions.json', 'w', encoding='utf-8') as f:
-        json.dump(descriptions_db, f, indent=2, ensure_ascii=False)
 
-    print(f"✅ Synchro terminée. Images et descriptions séparées pour plus de stabilité.")
+    print(f"✅ Synchro terminée. {len(gallery_config)} fiches individuelles créées dans {DETAILS_DIR}")
 
 if __name__ == "__main__":
     sync()

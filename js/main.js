@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuOverlay = document.getElementById('menu-overlay');
     const detailView = document.getElementById('detail-view');
 
-    let allDescriptions = null;
-
     // 1. INTRO
     window.addEventListener('load', () => {
         setTimeout(() => body.classList.remove('loading'), 5500);
@@ -21,28 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 3. CHARGEMENT GALERIE
-    console.log("Tentative de chargement de la galerie...");
     if (typeof GALLERY_ITEMS !== 'undefined') {
-        console.log("GALLERY_ITEMS trouvé, nombre d'images :", GALLERY_ITEMS.length);
         renderGallery(GALLERY_ITEMS);
         setupFilters(GALLERY_ITEMS);
-    } else {
-        console.error("GALLERY_ITEMS est indéfini ! Vérifiez que js/gallery_config.js est bien chargé.");
     }
 
     function renderGallery(photos) {
-        console.log("Rendu de la galerie avec", photos.length, "photos.");
         gallery.innerHTML = '';
         photos.forEach((photo, index) => {
             const item = document.createElement('div');
             item.className = 'grid-item';
             item.innerHTML = `
                 <div class="img-container">
-                    <img src="${photo.src}" alt="${photo.title}" loading="lazy" onerror="console.error('Erreur de chargement pour l\'image :', this.src)">
+                    <img src="${photo.src}" alt="${photo.title}" loading="lazy" onerror="console.error('Erreur :', this.src)">
                 </div>
                 <div class="item-info" style="display:flex; justify-content:space-between; margin-top:10px; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; opacity:0.6;">
                     <span>${photo.title}</span>
-                    <span>${photo.year}</span>
                 </div>
             `;
             item.onclick = () => openDetail(photo);
@@ -65,33 +57,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. VUE DÉTAIL
+    // 5. VUE DÉTAIL (Chargement de la fiche individuelle uniquement)
     async function openDetail(photo) {
+        // Reset visuel immédiat
         document.getElementById('detail-img').src = photo.src;
-        document.getElementById('detail-title').textContent = photo.title;
-        document.getElementById('detail-category').textContent = photo.category.replace('-', ' • ');
-        document.getElementById('detail-year').textContent = photo.year;
-        
-        const descElement = document.getElementById('detail-desc');
-        descElement.textContent = "Chargement...";
+        document.getElementById('detail-title').textContent = "Chargement...";
+        document.getElementById('detail-category').textContent = "";
+        document.getElementById('detail-year').textContent = "";
+        document.getElementById('detail-desc').textContent = "";
         
         detailView.classList.add('open');
         body.style.overflow = 'hidden';
 
-        if (!allDescriptions) {
-            try {
-                const v = typeof GALLERY_VERSION !== 'undefined' ? GALLERY_VERSION : Date.now();
-                const response = await fetch(`data/descriptions.json?v=${v}`);
-                allDescriptions = await response.json();
-            } catch (e) {
-                console.error("Erreur chargement descriptions");
-            }
-        }
+        try {
+            // On va chercher LA fiche du fichier (ex: data/details/photo_1.json)
+            const v = typeof GALLERY_VERSION !== 'undefined' ? GALLERY_VERSION : Date.now();
+            const response = await fetch(`data/details/${photo.id}.json?v=${v}`);
+            const data = await response.json();
 
-        if (allDescriptions && allDescriptions[photo.id]) {
-            descElement.innerHTML = allDescriptions[photo.id].replace(/\n/g, '<br>');
-        } else {
-            descElement.textContent = "Description indisponible.";
+            // On remplit avec les infos exactes du CSV (extraites dans la fiche)
+            document.getElementById('detail-title').textContent = data.title;
+            document.getElementById('detail-category').textContent = data.category.replace('-', ' • ');
+            document.getElementById('detail-year').textContent = data.year;
+            document.getElementById('detail-desc').innerHTML = data.description.replace(/\n/g, '<br>');
+            
+        } catch (e) {
+            console.error("Erreur fiche :", e);
+            document.getElementById('detail-title').textContent = photo.title;
+            document.getElementById('detail-desc').textContent = "Erreur de chargement des informations.";
         }
     }
 
