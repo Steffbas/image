@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // On remplit avec les infos exactes du CSV (extraites dans la fiche)
             document.getElementById('detail-title').textContent = data.title;
-            document.getElementById('detail-category').textContent = data.category.replace('-', ' • ');
+            document.getElementById('detail-category').textContent = data.category.replace('-', ' ');
             document.getElementById('detail-year').textContent = data.year;
             document.getElementById('detail-desc').innerHTML = data.description.replace(/\n/g, '<br>');
             

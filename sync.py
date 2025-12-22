@@ -51,7 +51,7 @@ def sync():
                 else:
                     full_path = os.path.join(img_dir, filename)
                     year = datetime.datetime.fromtimestamp(os.path.getmtime(full_path)).strftime('%Y')
-                    title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ').title().replace("'", "•").replace("é", "e")
+                    title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ').title().replace("é", "e")
                     row = {
                         'Fichier': filename,
                         'Categorie': cat,
