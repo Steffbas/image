@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = block.dataset.target;
             
             if (target === 'contact') {
-                document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });
             } else {
                 // Scroll vers la galerie
                 const gallerySection = document.getElementById('gallery-section');

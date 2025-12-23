@@ -378,6 +378,61 @@ main {
 .text-wrapper h2 { font-family: var(--font-title); font-size: 4rem; font-style: italic; margin-bottom: 20px; }
 .close-detail { position: fixed; top: 40px; right: 60px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); z-index: 310; text-transform: uppercase; font-weight: bold; }
 
+/* =========================================
+   SECTION CONTACT
+   ========================================= */
+.contact-section {
+    background-color: #0a0a0a;
+    color: #ffffff;
+    padding: 150px 0;
+    border-top: 1px solid #1a1a1a;
+}
+
+.contact-content {
+    text-align: center;
+}
+
+.contact-title {
+    font-family: var(--font-title);
+    font-size: 6vw;
+    font-style: italic;
+    margin: 20px 0 40px 0;
+}
+
+.contact-link {
+    font-family: var(--font-title);
+    font-size: 3vw;
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 40px;
+    transition: opacity 0.3s ease;
+}
+
+.contact-link:hover {
+    opacity: 0.5;
+}
+
+.contact-socials {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    font-family: var(--font-tech);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+}
+
+.contact-socials a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-socials a:hover {
+    color: #ffffff;
+}
+
 footer {
     background-color: #0a0a0a;
     padding: 80px 60px; 
