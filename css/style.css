@@ -259,10 +259,10 @@ body:not(.loading) #intro-sequence { display: none; }
 }
 
 /* =========================================
-   HERO (Fixé en arrière-plan)
+   HERO (Sticky en arrière-plan)
    ========================================= */
 .hero { 
-    position: fixed; 
+    position: sticky; /* Reste collé tant qu'on n'a pas fini de le dépasser */
     top: 0; 
     left: 0; 
     width: 100%;
@@ -299,7 +299,7 @@ body:not(.loading) #intro-sequence { display: none; }
 main {
     position: relative; 
     z-index: 2; 
-    margin-top: 100vh; /* Restore margin-top for manual parallax */
+    /* Le flux naturel place main après hero, donc pas besoin de margin-top 100vh */
     background-color: #0a0a0a;
     color: #ffffff;
     min-height: 100vh;
