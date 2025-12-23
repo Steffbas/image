@@ -379,6 +379,55 @@ main {
 .close-detail { position: fixed; top: 40px; right: 60px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); z-index: 310; text-transform: uppercase; font-weight: bold; }
 
 /* =========================================
+   SECTION QUI JE SUIS
+   ========================================= */
+.about-section {
+    position: relative;
+    z-index: 2;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    padding: 150px 0;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    filter: grayscale(20%);
+    transition: filter 0.5s ease;
+}
+
+.about-image:hover img {
+    filter: grayscale(0%);
+}
+
+.about-text .meta-category {
+    display: block;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.about-title {
+    font-family: var(--font-title);
+    font-size: 4rem;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.about-text .body-text p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    color: #ccc;
+    font-size: 1.1rem;
+}
+
+/* =========================================
    SECTION CONTACT
    ========================================= */
 .contact-section {
@@ -448,6 +497,8 @@ footer {
 
 /* Mobiles */
 @media (max-width: 1024px) { 
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-title { font-size: 3rem; }
     .masonry-grid { column-count: 2; } 
     .detail-content { flex-direction: column; } 
     .filter-list { gap: 20px; flex-wrap: wrap; justify-content: center;}
