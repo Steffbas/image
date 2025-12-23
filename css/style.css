@@ -384,8 +384,8 @@ main {
 .about-section {
     position: relative;
     z-index: 2;
-    background-color: #0a0a0a;
-    color: #ffffff;
+    background-color: #ffffff;
+    color: #000000;
     padding: 150px 0;
 }
 
@@ -423,7 +423,7 @@ main {
 .about-text .body-text p {
     margin-bottom: 20px;
     line-height: 1.8;
-    color: #ccc;
+    color: #333333;
     font-size: 1.1rem;
 }
 
