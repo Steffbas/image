@@ -17,6 +17,14 @@
     font-weight: normal; font-style: normal;
 }
 
+/* Police spécifique pour la ponctuation standard (Arial) */
+@font-face {
+    font-family: 'StandardPunctuation';
+    src: local('Arial'), local('Helvetica'), local('sans-serif');
+    /* Couvre : Ponctuation basique, parenthèses, symboles mathématiques, degré, guillemets, tirets... */
+    unicode-range: U+0021-002F, U+003A-0040, U+005B-0060, U+007B-007E, U+00A0-00BF, U+2000-206F;
+}
+
 :root {
     --bg-color: #fdfbf7;
     --text-color: #111111; 
@@ -26,8 +34,9 @@
     --detail-bg: #fdfbf7;
     --detail-img-wrapper: #f4f4f4;
     
-    --font-title: 'The Seasons', serif;
-    --font-tech: 'Bai Jamjuree', sans-serif;
+    /* On place StandardPunctuation en PREMIER pour qu'il prenne le dessus sur les symboles */
+    --font-title: 'StandardPunctuation', 'The Seasons', serif;
+    --font-tech: 'StandardPunctuation', 'Bai Jamjuree', sans-serif;
 }
 
 /* Base */
