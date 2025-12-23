@@ -14,8 +14,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. GESTION MENU
     menuBtn.onclick = () => { menuOverlay.classList.add('active'); body.style.overflow = 'hidden'; };
     closeMenuBtn.onclick = () => { menuOverlay.classList.remove('active'); body.style.overflow = ''; };
-    document.querySelectorAll('.menu-link').forEach(link => {
-        link.onclick = () => { menuOverlay.classList.remove('active'); body.style.overflow = ''; };
+    
+    // Nouvelle gestion des blocs du menu
+    document.querySelectorAll('.menu-block').forEach(block => {
+        block.onclick = () => {
+            menuOverlay.classList.remove('active');
+            body.style.overflow = '';
+            
+            const target = block.dataset.target;
+            
+            if (target === 'contact') {
+                document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // Scroll vers la galerie
+                const gallerySection = document.getElementById('gallery-section');
+                gallerySection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Active le filtre correspondant
+                const filterBtn = document.querySelector(`#gallery-filters li[data-filter="${target}"]`);
+                if (filterBtn) {
+                    // Petit délai pour laisser le scroll se lancer
+                    setTimeout(() => filterBtn.click(), 300);
+                }
+            }
+        };
     });
 
     // 3. CHARGEMENT GALERIE

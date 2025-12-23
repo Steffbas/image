@@ -101,43 +101,110 @@ body:not(.loading) #intro-sequence { display: none; }
 .hamburger-btn:hover .bar:nth-child(3) { transform: translateX(-5px); }
 
 /* =========================================
-   MENU OVERLAY (Plein Écran)
+   MENU OVERLAY (Blocs Grille)
    ========================================= */
 .menu-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--bg-color);
+    background: #0a0a0a; /* Fond très sombre */
     z-index: 200;
     display: flex; justify-content: center; align-items: center;
     opacity: 0; pointer-events: none;
     transition: opacity 0.5s ease;
+    padding: 80px 40px; /* Espace autour de la grille */
 }
 
 .menu-overlay.active { opacity: 1; pointer-events: auto; }
 
-.overlay-links { list-style: none; text-align: center; }
-.overlay-links li { margin: 20px 0; overflow: hidden; }
-
-.menu-link {
-    font-family: var(--font-title);
-    font-size: 4rem;
-    color: var(--text-color);
-    display: block;
-    transform: translateY(100%);
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+    gap: 20px;
+    width: 100%; height: 100%;
+    max-width: 1400px;
 }
 
-.menu-overlay.active .menu-link { transform: translateY(0); }
-/* Délais en cascade */
-.menu-overlay.active li:nth-child(1) .menu-link { transition-delay: 0.1s; }
-.menu-overlay.active li:nth-child(2) .menu-link { transition-delay: 0.2s; }
-.menu-overlay.active li:nth-child(3) .menu-link { transition-delay: 0.3s; }
+.menu-block {
+    position: relative;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    opacity: 0; transform: translateY(30px);
+}
 
-.menu-link:hover { font-style: italic; opacity: 0.7; }
+.menu-overlay.active .menu-block {
+    opacity: 1; transform: translateY(0);
+}
+
+/* Délais d'apparition en cascade */
+.menu-overlay.active .menu-block:nth-child(1) { transition-delay: 0.1s; }
+.menu-overlay.active .menu-block:nth-child(2) { transition-delay: 0.15s; }
+.menu-overlay.active .menu-block:nth-child(3) { transition-delay: 0.2s; }
+.menu-overlay.active .menu-block:nth-child(4) { transition-delay: 0.25s; }
+.menu-overlay.active .menu-block:nth-child(5) { transition-delay: 0.3s; }
+.menu-overlay.active .menu-block:nth-child(6) { transition-delay: 0.35s; }
+
+/* Contenu du bloc */
+.block-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    color: #fff;
+    transition: transform 0.3s ease;
+}
+
+.block-num {
+    display: block; font-family: var(--font-tech);
+    font-size: 0.8rem; letter-spacing: 2px;
+    margin-bottom: 10px; color: #666;
+}
+
+.block-title {
+    font-family: var(--font-title);
+    font-size: 2rem; font-weight: normal;
+    text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* Hover Effects */
+.menu-block:hover {
+    background: #ffffff; /* Le bloc devient blanc */
+    transform: scale(0.98); /* Léger effet de presse */
+}
+
+.menu-block:hover .block-content {
+    color: #000; /* Texte devient noir */
+}
+
+.menu-block:hover .block-num {
+    color: #000;
+}
+
+.menu-block:hover .block-title {
+    font-style: italic;
+}
+
+/* Contact Block Spécial */
+.contact-block {
+    background: #222;
+    border-color: #444;
+}
 
 .close-menu {
-    position: absolute; top: 40px; left: 60px;
-    background: none; border: none; font-size: 3rem; color: var(--text-color);
-    cursor: pointer; line-height: 1;
+    position: absolute; top: 30px; left: 40px;
+    background: none; border: none; font-size: 3rem; color: #fff;
+    cursor: pointer; line-height: 1; z-index: 210;
+}
+
+/* Responsive Menu */
+@media (max-width: 1024px) {
+    .menu-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    .menu-grid { grid-template-columns: 1fr; gap: 10px; }
+    .menu-overlay { padding: 80px 20px 20px 20px; }
+    .block-title { font-size: 1.5rem; }
+    .block-num { font-size: 0.7rem; }
 }
 
 /* =========================================
