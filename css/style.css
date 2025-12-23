@@ -2,16 +2,6 @@
    POLICES
    ========================================= */
 @font-face {
-    font-family: 'The Seasons';
-    src: url('../fonts/The Seasons Font/Demo_Fonts/Fontspring-DEMO-theseasons-reg.otf') format('opentype');
-    font-weight: normal; font-style: normal;
-}
-@font-face {
-    font-family: 'The Seasons';
-    src: url('../fonts/The Seasons Font/Demo_Fonts/Fontspring-DEMO-theseasons-it.otf') format('opentype');
-    font-weight: normal; font-style: italic;
-}
-@font-face {
     font-family: 'Bai Jamjuree';
     src: url('../fonts/bai-jamjuree/BaiJamjuree-Regular.ttf') format('truetype');
     font-weight: normal; font-style: normal;
@@ -34,8 +24,8 @@
     --detail-bg: #fdfbf7;
     --detail-img-wrapper: #f4f4f4;
     
-    /* On place StandardPunctuation en PREMIER pour qu'il prenne le dessus sur les symboles */
-    --font-title: 'StandardPunctuation', 'The Seasons', serif;
+    /* On utilise Playfair Display pour les titres */
+    --font-title: 'StandardPunctuation', 'Playfair Display', serif;
     --font-tech: 'StandardPunctuation', 'Bai Jamjuree', sans-serif;
 }
 
