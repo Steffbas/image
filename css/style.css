@@ -338,7 +338,8 @@ html, body {
 
     /* Menu Overlay (Une seule colonne) */
     .menu-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
-    .menu-overlay { padding: 60px 20px !important; overflow-y: auto !important; }
+    .menu-overlay { padding: 100px 20px 40px 20px !important; overflow-y: auto !important; }
+    .close-menu { top: 20px !important; left: 20px !important; font-size: 2.5rem !important; }
     .menu-block { min-height: 100px !important; }
     .block-title { font-size: 1.5rem !important; }
     .menu-info-zone { padding: 20px !important; }
