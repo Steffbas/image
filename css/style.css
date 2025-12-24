@@ -333,8 +333,11 @@ html, body {
     .logo { font-size: 0.9rem !important; }
 
     /* Hero */
-    .hero { height: 60vh !important; width: 100% !important; }
+    .hero { height: 60vh !important; width: 100% !important; position: fixed !important; }
     .hero-title { font-size: 13vw !important; }
+
+    /* Main (Rideau Mobile) */
+    main { margin-top: 60vh !important; }
 
     /* Menu Overlay (Une seule colonne) */
     .menu-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
@@ -469,10 +472,10 @@ html, body {
 .desktop-text { display: block; }
 
 /* =========================================
-   HERO (Sticky en arrière-plan)
+   HERO (Fixé en arrière-plan)
    ========================================= */
 .hero { 
-    position: sticky; /* Reste collé tant qu'on n'a pas fini de le dépasser */
+    position: fixed; /* Changé de sticky à fixed pour garantir l'effet rideau */
     top: 0; 
     left: 0; 
     width: 100%;
@@ -491,17 +494,7 @@ html, body {
     margin: 0; 
     text-align: left;
 }
-.hero-title .line { 
-    display: block; 
-    opacity: 0; 
-    transform: translateY(30px); 
-    animation: reveal 1s forwards;
-}
-/* Effet Quinconce */
-.hero-title .line:nth-child(1) { animation-delay: 0.2s; margin-left: 0; }
-.hero-title .line:nth-child(2) { animation-delay: 0.4s; margin-left: 10vw; font-style: italic; }
-.hero-title .line:nth-child(3) { animation-delay: 0.6s; margin-left: 5vw; }
-@keyframes reveal { to { opacity: 1; transform: translateY(0); } }
+/* ... reste du titre hero ... */
 
 /* =========================================
    MAIN SECTION (Le rideau noir qui monte)
@@ -509,7 +502,7 @@ html, body {
 main {
     position: relative; 
     z-index: 2; 
-    /* Le flux naturel place main après hero, donc pas besoin de margin-top 100vh */
+    margin-top: 100vh; /* Obligatoire avec hero en fixed pour voir l'accueil */
     background-color: #0a0a0a;
     color: #ffffff;
     min-height: 100vh;
