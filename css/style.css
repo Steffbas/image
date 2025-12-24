@@ -222,27 +222,38 @@ body:not(.loading) #intro-sequence { display: none; }
 
 .info-label {
     font-family: var(--font-tech);
-    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
-    color: #666; margin-bottom: 20px;
+    font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; /* Plus grand (était 0.8rem) */
+    color: #888; margin-bottom: 20px;
 }
 
 .info-mail {
     font-family: var(--font-title);
-    font-size: 1.2rem; color: #fff; /* Réduit de 1.5rem à 1.2rem pour l'email long */
-    text-decoration: none; margin-bottom: 10px;
+    font-size: 1.6rem; color: #fff; /* Plus grand (était 1.2rem) */
+    text-decoration: none; margin-bottom: 25px;
     display: block;
-    word-break: break-all; /* Sécurité pour mobile */
+    word-break: break-all;
     transition: opacity 0.3s;
 }
 .info-mail:hover { opacity: 0.7; }
 
 .info-socials {
-    display: flex; gap: 20px;
-    font-family: var(--font-tech);
-    font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
+    display: flex; gap: 30px; /* Plus d'espace entre les icones */
+    justify-content: center;
+    margin-top: 10px;
 }
-.info-socials a { color: #888; text-decoration: none; transition: color 0.3s; }
-.info-socials a:hover { color: #fff; }
+.info-socials a {
+    color: #fff;
+    transition: transform 0.3s ease, color 0.3s ease;
+    display: flex; align-items: center; justify-content: center;
+}
+.info-socials svg {
+    width: 32px; height: 32px; /* Taille des icones */
+    stroke-width: 1.5;
+}
+.info-socials a:hover {
+    color: #ccc;
+    transform: translateY(-5px); /* Petite animation vers le haut */
+}
 
 /* Contenu du bloc */
 .block-content {
