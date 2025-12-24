@@ -430,7 +430,7 @@ html, body {
         border: none !important; /* Supprime la bordure */
         width: fit-content !important;
         font-size: 1rem !important;
-        text-decoration: underline; /* Optionnel: léger soulignement pour le clic */
+        text-decoration: none !important; /* Retrait du soulignement */
         opacity: 0.8;
     }
     .text-wrapper {
@@ -441,15 +441,23 @@ html, body {
     /* Fullscreen mobile adjustment */
     .detail-view.fullscreen-mode {
         display: flex !important;
+        justify-content: center !important; /* Centrage vertical du contenu */
     }
     .detail-view.fullscreen-mode .close-detail {
+        position: fixed !important; /* On le refixe pour qu'il ne gêne pas le centrage */
+        top: 20px !important;
+        right: 20px !important;
         order: 2 !important;
         color: #fff !important;
         border: none !important;
+        z-index: 320;
     }
     .detail-view.fullscreen-mode .image-wrapper {
         order: 1 !important;
-        height: 80vh !important;
+        height: 100vh !important;
+        display: flex !important;
+        align-items: center !important; /* Centrage vertical de l'image */
+        justify-content: center !important; /* Centrage horizontal de l'image */
     }
 
     /* Intro */
