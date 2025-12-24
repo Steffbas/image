@@ -338,38 +338,56 @@ body:not(.loading) #intro-sequence { display: none; }
     .block-title { font-size: 1.8rem; }
     
     /* Filtres (Aérés pour le tactile) */
-    .filters-container { margin-bottom: 40px; }
-    .filter-list { gap: 15px; flex-wrap: wrap; justify-content: center; }
-    .filter-list li { padding: 10px 15px; font-size: 0.9rem; } /* Zone de clic agrandie */
+    .filters-container { margin-bottom: 20px; }
+    .filter-list { gap: 10px; flex-wrap: wrap; justify-content: center; border-bottom: none; }
+    .filter-list li { padding: 5px 10px; font-size: 0.85rem; }
 
-    /* Galerie */
-    .masonry-grid { column-count: 1; }
-    .grid-item { margin-bottom: 30px; }
+    /* Galerie (2 colonnes) */
+    .masonry-grid { column-count: 2; column-gap: 15px; }
+    .grid-item { margin-bottom: 15px; }
+    .item-info { font-size: 0.7rem; margin-top: 5px; }
 
-    /* About Section */
-    .about-section { padding: 80px 0; }
-    .about-title { font-size: 2.5rem; }
-    .about-text .body-text p { font-size: 1rem; line-height: 1.6; }
+    /* About Section (Condensée) */
+    .about-section { padding: 60px 0; }
+    .about-title { font-size: 2.2rem; margin-bottom: 20px; }
+    .desktop-text { display: none; }
+    .mobile-text { display: block; }
+    .about-text .body-text p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 15px; }
 
     /* Contact & Form */
-    .contact-section { padding: 80px 0; }
-    .contact-title { font-size: 3rem; margin-bottom: 40px; }
-    .contact-form input, .contact-form textarea { font-size: 1.1rem; padding: 20px 0; } /* Inputs plus hauts */
-    .submit-btn { width: 100%; padding: 20px; font-size: 1rem; }
+    .contact-section { padding: 60px 0; }
+    .contact-title { font-size: 4.5rem; margin-bottom: 30px; } /* Grossi le mot Contact */
+    .contact-form input, .contact-form textarea { font-size: 1.1rem; padding: 15px 0; }
+    .submit-btn { padding: 18px; }
 
-    /* Footer (Empilé) */
+    /* Footer (Ajusté) */
     footer {
-        padding: 40px 20px;
+        padding: 40px 15px;
         flex-direction: column;
-        gap: 40px;
+        gap: 30px;
         text-align: center;
     }
-    .copyright { align-self: center; order: 2; margin-top: 10px; font-size: 0.7rem; }
-    .socials-footer { gap: 40px; flex-wrap: wrap; justify-content: center; }
+    .copyright { 
+        align-self: center; 
+        order: 2; 
+        margin-top: 20px; 
+        font-size: 0.75rem;
+        width: 100%;
+        text-align: center;
+    }
+    .socials-footer { 
+        gap: 25px; /* Rapprochement des réseaux */
+        justify-content: center; 
+        width: 100%;
+    }
     
     /* Intro */
     .intro-word { font-size: 12vw; width: 90%; }
 }
+
+/* Utilitaires visibilité */
+.mobile-text { display: none; }
+.desktop-text { display: block; }
 
 /* =========================================
    HERO (Sticky en arrière-plan)
